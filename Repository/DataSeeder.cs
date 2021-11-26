@@ -16,22 +16,24 @@ namespace Repository
                     new Entities.Book
                     {
                         Id = 1,
-                        Title = "benjo",
-                        Author = "ddd",
-                        Description = "dd",
-                        CoverImage ="da",
-                        Price=(decimal) 1534.45,
+                        Title = "Ancient Mariner",
+                        Author = "Coleridge",
+                        Description = "Rime of the Ancient Mariner tells of the misfortunes of a seaman who shoots an albatross, which spells disaster for his ship and fellow sailors.",
+                        CoverImage = "AncientMariner.jpeg",
+                        Price=(decimal) 156,
+                        CreatedDate=DateTime.Now,
                         IsDeleted=false
                     },
                     new Entities.Book
                     {
                         Id = 2,
-                        Title = "22",
-                        Author = "2",
-                        Description = "2",
-                        CoverImage = "2",
-                        Price = (decimal)22222,
-                        IsDeleted=false,
+                        Title = "Arms and the Man",
+                        Author = "G.B.Shaw",
+                        Description = "Arms and the Man is a comedy by George Bernard Shaw",
+                        CoverImage = "ArmsandtheMan.jpeg",
+                        Price = (decimal)222.9,
+                        CreatedDate = DateTime.Now,
+                        IsDeleted =false,
                     });
 
                 context.SaveChanges();
