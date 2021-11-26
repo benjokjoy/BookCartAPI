@@ -49,36 +49,6 @@ namespace CoreBusiness.Book
                 throw new Exception(ex.Message);
             }
         }
-
-        public async Task<BookResponseDto> UpdatePrice(long id, decimal price)
-        {
-            try
-            {
-                return await _bookRepo.UpdatePrice(id, price);
-
-            }
-            catch (Exception ex)
-            {
-
-                throw new Exception(ex.Message);
-            }
-        }
-
-
-        public async Task<BookResponseDto> UpdateBook(BookRequestDto request)
-        {
-            try
-            {
-                return await _bookRepo.UpdateBook(request);
-
-            }
-            catch (Exception ex)
-            {
-
-                throw new Exception(ex.Message);
-            }
-        }
-
         public async Task<BookResponseDto> CreateBook(BookRequestDto request)
         {
             try
@@ -89,11 +59,11 @@ namespace CoreBusiness.Book
                     Description = request.Description,
                     Author = request.Author,
                     CoverImage = request.CoverImage,
-                    Price = request.Price??0,
-                    CreatedDate=DateTime.Now,
-                    IsDeleted=false
+                    Price = request.Price ?? 0,
+                    CreatedDate = DateTime.Now,
+                    IsDeleted = false
                 };
-                 await _bookRepo.Add(book);
+                await _bookRepo.Add(book);
                 return new BookResponseDto
                 {
                     Id = book.Id,
@@ -110,8 +80,32 @@ namespace CoreBusiness.Book
                 throw new Exception(ex.Message);
             }
         }
+        public async Task<BookResponseDto> UpdatePrice(long id, decimal price)
+        {
+            try
+            {
+                return await _bookRepo.UpdatePrice(id, price);
 
+            }
+            catch (Exception ex)
+            {
 
+                throw new Exception(ex.Message);
+            }
+        }
+        public async Task<BookResponseDto> UpdateBook(BookRequestDto request)
+        {
+            try
+            {
+                return await _bookRepo.UpdateBook(request);
+
+            }
+            catch (Exception ex)
+            {
+
+                throw new Exception(ex.Message);
+            }
+        }
         public async Task<BookResponseDto> DeleteBook(long id)
         {
             try

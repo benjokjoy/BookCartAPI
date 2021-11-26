@@ -119,6 +119,46 @@ namespace BookCartAPI.Controllers
 
         }
 
+        /// <summary>
+        /// This will allow user to create a new book
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns>BooksResponse</returns>
+        [HttpPost]
+        [Route("CreateBook")]
+        [Produces("application/json")]
+        [MapToApiVersion("1.0")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(BooksResponse))]
+        [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(NotFoundException))]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(BadRequestException))]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(InternalServerException))]
+        public async Task<IActionResult> CreateBook(CreateBookRequest request)
+        {
+            try
+            {
+                BookRequestDto reqDto = _mapper.Map<BookRequestDto>(request);
+                BookResponseDto resultDto = await _bookService.CreateBook(reqDto);
+                if (resultDto != null)
+                {
+                    BooksResponse response = _mapper.Map<BooksResponse>(resultDto);
+                    _logger.Write(LogEventLevel.Information, LoggerTemplate.Success, "CreateBook", StatusCodes.Status200OK);
+                    return StatusCode(StatusCodes.Status200OK, response);
+                }
+                else
+                {
+                    _logger.Write(LogEventLevel.Warning, LoggerTemplate.Success, "CreateBook", StatusCodes.Status204NoContent);
+                    return StatusCode(StatusCodes.Status204NoContent);
+                }
+
+            }
+            catch (Exception ex)
+            {
+                _logger.Write(LogEventLevel.Error, LoggerTemplate.Error, "CreateBook", ex.Message, StatusCodes.Status500InternalServerError);
+                return StatusCode(StatusCodes.Status500InternalServerError, new InternalServerException(ex.Message));
+            }
+
+        }
 
         /// <summary>
         /// This will allow user to update the price of a book
@@ -198,47 +238,6 @@ namespace BookCartAPI.Controllers
             catch (Exception ex)
             {
                 _logger.Write(LogEventLevel.Error, LoggerTemplate.Error, "UpdateBook", ex.Message, StatusCodes.Status500InternalServerError);
-                return StatusCode(StatusCodes.Status500InternalServerError, new InternalServerException(ex.Message));
-            }
-
-        }
-
-        /// <summary>
-        /// This will allow user to create a new book
-        /// </summary>
-        /// <param name="request"></param>
-        /// <returns>BooksResponse</returns>
-        [HttpPost]
-        [Route("CreateBook")]
-        [Produces("application/json")]
-        [MapToApiVersion("1.0")]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(BooksResponse))]
-        [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(NotFoundException))]
-        [ProducesResponseType(StatusCodes.Status204NoContent)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(BadRequestException))]
-        [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(InternalServerException))]
-        public async Task<IActionResult> CreateBook(CreateBookRequest request)
-        {
-            try
-            {
-                BookRequestDto reqDto = _mapper.Map<BookRequestDto>(request);
-                BookResponseDto resultDto = await _bookService.CreateBook(reqDto);
-                if (resultDto != null)
-                {
-                    BooksResponse response = _mapper.Map<BooksResponse>(resultDto);
-                    _logger.Write(LogEventLevel.Information, LoggerTemplate.Success, "CreateBook", StatusCodes.Status200OK);
-                    return StatusCode(StatusCodes.Status200OK, response);
-                }
-                else
-                {
-                    _logger.Write(LogEventLevel.Warning, LoggerTemplate.Success, "CreateBook", StatusCodes.Status204NoContent);
-                    return StatusCode(StatusCodes.Status204NoContent);
-                }
-
-            }
-            catch (Exception ex)
-            {
-                _logger.Write(LogEventLevel.Error, LoggerTemplate.Error, "CreateBook", ex.Message, StatusCodes.Status500InternalServerError);
                 return StatusCode(StatusCodes.Status500InternalServerError, new InternalServerException(ex.Message));
             }
 
