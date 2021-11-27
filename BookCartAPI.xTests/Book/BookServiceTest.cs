@@ -1,15 +1,10 @@
-﻿using AutoMapper;
-using BookCartAPI.Helper;
-using BookCartAPI.RequestResponseModels;
-using CoreBusiness.Book;
+﻿using CoreBusiness.Book;
 using Models.DTO;
 using Moq;
 using Repository.Book;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Xunit;
 using Entities = Models.Entities;
 namespace BookCartAPI.xTests.Book

@@ -2,9 +2,7 @@
 using Repository.Book;
 using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
-using Entities = Models.Entities;
 namespace CoreBusiness.Book
 {
     public class BookService : IBookService

@@ -1,9 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System;
 using Entities = Models.Entities;
 
 namespace Repository
@@ -15,7 +10,7 @@ namespace Repository
                 context.Books.AddRange(
                     new Entities.Book
                     {
-                        Id = 1,
+                       
                         Title = "Ancient Mariner",
                         Author = "Coleridge",
                         Description = "Rime of the Ancient Mariner tells of the misfortunes of a seaman who shoots an albatross, which spells disaster for his ship and fellow sailors.",
@@ -26,7 +21,7 @@ namespace Repository
                     },
                     new Entities.Book
                     {
-                        Id = 2,
+                      
                         Title = "Arms and the Man",
                         Author = "G.B.Shaw",
                         Description = "Arms and the Man is a comedy by George Bernard Shaw",
@@ -36,7 +31,24 @@ namespace Repository
                         IsDeleted =false,
                     });
 
-                context.SaveChanges();
+            context.Users.AddRange(
+                    new Entities.User
+                    {                      
+                        UserName = "admin",
+                        Password = "admin",
+                        Role = "Admin",                        
+                        CreatedDate = DateTime.Now,
+                        IsDeleted = false
+                    },
+                    new Entities.User
+                    {
+                        UserName = "lohgarra",
+                        Password = "lohgarra",
+                        Role = "User",
+                        CreatedDate = DateTime.Now,
+                        IsDeleted = false
+                    });
+            context.SaveChanges();
             }
       
     } 
