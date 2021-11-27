@@ -57,7 +57,46 @@ namespace Repository.Book
 
         }
 
+        public async Task<BookResponseDto> CreateBook(BookRequestDto request)
+        {
+            try
+            {
+                if (request == null)
+                {
+                    return null;
+                }
+                var book = new Entities.Book
+                {
+                    Title = request.Title,
+                    Description = request.Description,
+                    Author = request.Author,
+                    CoverImage = request.CoverImage,
+                    Price = request.Price ?? 0,
+                    CreatedDate = DateTime.Now,
+                    IsDeleted = false
+                };
+                await _context.Books.AddAsync(book);
+                _context.SaveChanges();
 
+                return new BookResponseDto
+                {
+                    Id = book.Id,
+                    Title = book.Title,
+                    Description = book.Description,
+                    Author = book.Author,
+                    CoverImage = book.CoverImage,
+                    Price = book.Price,
+                };
+               
+            }
+            catch (Exception ex)
+            {
+
+                throw new Exception(ex.Message);
+            }
+
+
+        }
         public async Task<BookResponseDto> UpdatePrice(long id, decimal price)
         {
             try
