@@ -8,19 +8,18 @@ using Models.DTO;
 using Serilog;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
-using Serilog;
 using Serilog.Events;
 using BookCartAPI.Helper;
-using System.Net;
-using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNetCore.Authorization;
+
 namespace BookCartAPI.Controllers
 {
 
     [Route("api/v{version:apiversion}/[controller]")]
     [ApiVersion("1.0")]
     [ApiController]
+    [Authorize(Roles = "Admin")]
     public class BookController : ControllerBase
     {
         private readonly IMapper _mapper;
@@ -40,12 +39,13 @@ namespace BookCartAPI.Controllers
         /// </summary>
         /// <param name="request"></param>
         /// <returns>List<BooksResponse></returns>
-        [HttpPost]
-        [Route("GetAllBooks")]
+        [HttpPost("GetAllBooks")]        
         [Produces("application/json")]
         [MapToApiVersion("1.0")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(List<BooksResponse>))]
         [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(NotFoundException))]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized, Type = typeof(AuthenticationException))]
+        [ProducesResponseType(StatusCodes.Status403Forbidden, Type = typeof(AuthorizationException))]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(BadRequestException))]
         [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(InternalServerException))]
@@ -83,12 +83,13 @@ namespace BookCartAPI.Controllers
         /// </summary>
         /// <param name="id"></param>
         /// <returns>BooksResponse</returns>
-        [HttpGet]
-        [Route("GetBook/{id}")]
+        [HttpGet("GetBook/{id}")]       
         [Produces("application/json")]
         [MapToApiVersion("1.0")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(BooksResponse))]
         [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(NotFoundException))]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized, Type = typeof(AuthenticationException))]
+        [ProducesResponseType(StatusCodes.Status403Forbidden, Type = typeof(AuthorizationException))]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(BadRequestException))]
         [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(InternalServerException))]
@@ -124,12 +125,13 @@ namespace BookCartAPI.Controllers
         /// </summary>
         /// <param name="request"></param>
         /// <returns>BooksResponse</returns>
-        [HttpPost]
-        [Route("CreateBook")]
+        [HttpPost("CreateBook")]       
         [Produces("application/json")]
         [MapToApiVersion("1.0")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(BooksResponse))]
         [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(NotFoundException))]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized, Type = typeof(AuthenticationException))]
+        [ProducesResponseType(StatusCodes.Status403Forbidden, Type = typeof(AuthorizationException))]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(BadRequestException))]
         [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(InternalServerException))]
@@ -166,12 +168,13 @@ namespace BookCartAPI.Controllers
         /// <param name="id"></param>
         /// <param name="price"></param>
         /// <returns>BooksResponse</returns>
-        [HttpPatch]
-        [Route("UpdatePrice/{id}")]
+        [HttpPatch("UpdatePrice/{id}")]
         [Produces("application/json")]
         [MapToApiVersion("1.0")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(BooksResponse))]
         [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(NotFoundException))]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized, Type = typeof(AuthenticationException))]
+        [ProducesResponseType(StatusCodes.Status403Forbidden, Type = typeof(AuthorizationException))]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(BadRequestException))]
         [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(InternalServerException))]
@@ -207,12 +210,13 @@ namespace BookCartAPI.Controllers
         /// </summary>
         /// <param name="request"></param>
         /// <returns>BooksResponse</returns>
-        [HttpPut]
-        [Route("UpdateBook")]
+        [HttpPut("UpdateBook")]
         [Produces("application/json")]
         [MapToApiVersion("1.0")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(BooksResponse))]
         [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(NotFoundException))]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized, Type = typeof(AuthenticationException))]
+        [ProducesResponseType(StatusCodes.Status403Forbidden, Type = typeof(AuthorizationException))]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(BadRequestException))]
         [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(InternalServerException))]
@@ -248,12 +252,13 @@ namespace BookCartAPI.Controllers
         /// </summary>
         /// <param name="id"></param>
         /// <returns>string</returns>
-        [HttpDelete]
-        [Route("DeleteBook/{id}")]
+        [HttpDelete("DeleteBook/{id}")]
         [Produces("application/json")]
         [MapToApiVersion("1.0")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(string))]
         [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(NotFoundException))]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized, Type = typeof(AuthenticationException))]
+        [ProducesResponseType(StatusCodes.Status403Forbidden, Type = typeof(AuthorizationException))]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(BadRequestException))]
         [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(InternalServerException))]

@@ -1,8 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Text;
-
 namespace Repository
 {
    public class BookCartDBContext : DbContext
@@ -14,6 +10,7 @@ namespace Repository
         }
 
         public DbSet<Models.Entities.Book> Books { get; set; }
+        public DbSet<Models.Entities.User> Users { get; set; }
 
 
        

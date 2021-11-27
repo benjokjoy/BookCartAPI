@@ -1,12 +1,10 @@
-﻿using CoreBusiness.Book;
+﻿using BookCartAPI.Auth;
+using CoreBusiness.Book;
+using CoreBusiness.User;
 using Microsoft.Extensions.DependencyInjection;
 using Repository.Book;
-using System;
-using System.Collections.Generic;
+using Repository.User;
 using System.Diagnostics.CodeAnalysis;
-using System.Linq;
-using System.Threading.Tasks;
-
 namespace BookCartAPI.Helper
 {
     [ExcludeFromCodeCoverage]
@@ -14,11 +12,16 @@ namespace BookCartAPI.Helper
     {
         public static IServiceCollection ServiceRegistry(this IServiceCollection services)
         {
+            services.AddScoped<IJwtAuth, JwtAuth>();
+
             //services
-            services.AddScoped<IBookService, BookService>();
+            services.AddScoped<IBookService, BookService>();         
+            services.AddScoped<IUserService, UserService>();
 
             //repositories
             services.AddScoped<IBookRepository, BookRepository>();
+            services.AddScoped<IUserRepository, UserRepository>();
+            
 
             return services;
         }
