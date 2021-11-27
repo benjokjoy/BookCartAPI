@@ -15,7 +15,7 @@ This API is version 1. When you use swagger give version as "1"
 
 ## For Running other APIs ##
 
-You have to pass the bearer token in the requst header with field "Authorization" and value "Bearer {Token}"
+You have to pass the bearer token in the request header with field "Authorization" and value "Bearer {Token}"
  or 
 You can use Authorization Type as "Bearer Token" in Postman.
 
