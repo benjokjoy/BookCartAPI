@@ -10,9 +10,11 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore;
 using Serilog;
 using Serilog.Formatting.Compact;
+using System.Diagnostics.CodeAnalysis;
 
 namespace BookCartAPI
 {
+    [ExcludeFromCodeCoverage]
     public class Program
     {
         public static void Main(string[] args)

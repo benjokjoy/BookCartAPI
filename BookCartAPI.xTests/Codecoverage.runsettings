@@ -1,0 +1,28 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<RunSettings>
+  <DataCollectionRunSettings>
+    <DataCollectors>
+      <DataCollector friendlyName="Code Coverage" uri="datacollector://Microsoft/CodeCoverage/2.0" assemblyQualifiedName="Microsoft.VisualStudio.Coverage.DynamicCoverageDataCollector, Microsoft.VisualStudio.TraceCollector, Version=11.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+        <Configuration>
+          <CodeCoverage>         
+            <!-- Exclude .dll's by file name pattern -->
+            <ModulePaths>
+              <Exclude>
+               <ModulePath>.*Tests.dll</ModulePath>
+                <ModulePath>.*\\moq\.dll$</ModulePath>              
+                <ModulePath>.*models.dll</ModulePath>
+                <ModulePath>.*repository.dll</ModulePath>
+                <ModulePath>.*xunit.assert.dll</ModulePath>
+                <ModulePath>.*xunit.core.dll</ModulePath>
+                <ModulePath>.*xunit.execution.dotnet.dll</ModulePath>
+                <ModulePath>.*xunit.runner.reporters.netcoreapp10.dll</ModulePath>
+                <ModulePath>.*xunit.runner.utility.netcoreapp10.dll</ModulePath>
+                <ModulePath>.*xunit.runner.visualstudio.dotnetcore.testadapter.dll</ModulePath>
+              </Exclude>
+            </ModulePaths>
+          </CodeCoverage>
+        </Configuration>
+      </DataCollector>
+    </DataCollectors>
+  </DataCollectionRunSettings>
+</RunSettings>

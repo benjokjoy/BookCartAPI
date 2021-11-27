@@ -53,26 +53,7 @@ namespace CoreBusiness.Book
         {
             try
             {
-                var book = new Entities.Book
-                {
-                    Title = request.Title,
-                    Description = request.Description,
-                    Author = request.Author,
-                    CoverImage = request.CoverImage,
-                    Price = request.Price ?? 0,
-                    CreatedDate = DateTime.Now,
-                    IsDeleted = false
-                };
-                await _bookRepo.Add(book);
-                return new BookResponseDto
-                {
-                    Id = book.Id,
-                    Title = book.Title,
-                    Description = book.Description,
-                    Author = book.Author,
-                    CoverImage = book.CoverImage,
-                    Price = book.Price,
-                };
+                return await _bookRepo.CreateBook(request);
             }
             catch (Exception ex)
             {

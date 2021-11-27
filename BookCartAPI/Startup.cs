@@ -16,9 +16,11 @@ using BookCartAPI.Helper;
 using Repository;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc.Versioning;
+using System.Diagnostics.CodeAnalysis;
 
 namespace BookCartAPI
 {
+    [ExcludeFromCodeCoverage]
     public class Startup
     {
         private readonly IConfiguration _config;
