@@ -42,25 +42,27 @@ namespace BookCartAPI.xTests.Book
         [Fact]
         public void GetAllBooks_Controller_Test()
         {
-            List<BookResponseDto> serviceResponseObj = new List<BookResponseDto>() {
+
+            List<BookResponseDto> booksDetails = new List<BookResponseDto>() {
             new BookResponseDto{ Id = 2, Title = "Arms and the Man",Author = "G.B.Shaw",Description = "Arms and the Man is a comedy by George Bernard Shaw",CoverImage = "ArmsandtheMan.jpeg",Price = (decimal)222.9},
             new BookResponseDto{Id = 1, Title = "Ancient Mariner", Author = "Coleridge",Description = "Rime of the Ancient Mariner tells of the misfortunes of a seaman who shoots an albatross, which spells disaster for his ship and fellow sailors.",CoverImage = "AncientMariner.jpeg",Price=(decimal) 156 }
             };
-
+            GetAllBooksResponseDto serviceResponseObj = new GetAllBooksResponseDto() { BooksResponse = booksDetails, TotalCount = 2 };
             _bookService.Setup(x => x.GetAllBooks(It.IsAny<GetBooksRequestDto>())).ReturnsAsync(serviceResponseObj);
 
             var controllerObj = new BookController(_mapper, _bookService.Object);
             var result = (ObjectResult)controllerObj.GetAllBooks(getAllBooksRequest).Result;
-            var response = (List<BooksResponse>)result.Value;
+            var response = (GetAllBooksResponse)result.Value;
             Assert.Equal(StatusCodes.Status200OK, result.StatusCode);
             Assert.NotNull(response);
-            Assert.Equal("Arms and the Man", response.FirstOrDefault().Title);
-            Assert.Equal(2, response.Count);
+            Assert.Equal("Arms and the Man", response.BooksResponse.FirstOrDefault().Title);
+            Assert.Equal(2, response.BooksResponse.Count);
+            Assert.Equal(2, response.TotalCount);
         }
         [Fact]
         public void GetAllBooks_Controller_NoData_Test()
         {
-            List<BookResponseDto> serviceResponseObj = null;
+            GetAllBooksResponseDto serviceResponseObj = null;
 
             _bookService.Setup(x => x.GetAllBooks(It.IsAny<GetBooksRequestDto>())).ReturnsAsync(serviceResponseObj);
 

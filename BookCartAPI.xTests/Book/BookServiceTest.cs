@@ -26,18 +26,19 @@ namespace BookCartAPI.xTests.Book
         [Fact]
         public void GetAllBooks_Service_Test()
         {
-            List<BookResponseDto> repositoryResponseObj = new List<BookResponseDto>() {
+            List<BookResponseDto> booksDetails = new List<BookResponseDto>() {
             new BookResponseDto{ Id = 2, Title = "Arms and the Man",Author = "G.B.Shaw",Description = "Arms and the Man is a comedy by George Bernard Shaw",CoverImage = "ArmsandtheMan.jpeg",Price = (decimal)222.9},
             new BookResponseDto{Id = 1, Title = "Ancient Mariner", Author = "Coleridge",Description = "Rime of the Ancient Mariner tells of the misfortunes of a seaman who shoots an albatross, which spells disaster for his ship and fellow sailors.",CoverImage = "AncientMariner.jpeg",Price=(decimal) 156 }
             };
-
+            GetAllBooksResponseDto repositoryResponseObj = new GetAllBooksResponseDto() { BooksResponse = booksDetails, TotalCount = 2 };
             _bookRepo.Setup(x => x.GetAllBooks(It.IsAny<GetBooksRequestDto>())).ReturnsAsync(repositoryResponseObj);
 
             var controllerObj = new BookService(_bookRepo.Object);
             var result = controllerObj.GetAllBooks(getAllBooksRequest).Result;
             Assert.NotNull(result);
-            Assert.Equal("Arms and the Man", result.FirstOrDefault().Title);
-            Assert.Equal(2, result.Count);
+            Assert.Equal("Arms and the Man", result.BooksResponse.FirstOrDefault().Title);
+            Assert.Equal(2, result.BooksResponse.Count);
+            Assert.Equal(2, result.TotalCount);
         }
         [Fact]
         public void GetAllBooks_Service_Exception_Test()

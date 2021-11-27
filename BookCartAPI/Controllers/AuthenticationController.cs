@@ -13,7 +13,8 @@ using System.Threading.Tasks;
 namespace BookCartAPI.Controllers
 {
     [ExcludeFromCodeCoverage]
-    [Route("api/[controller]")]
+    [Route("api/v{version:apiversion}/[controller]")]
+    [ApiVersion("1.0")]
     [ApiController]
     public class AuthenticationController : ControllerBase
     {
@@ -32,6 +33,7 @@ namespace BookCartAPI.Controllers
         /// <returns>TokenResponse</returns>
         [AllowAnonymous]
         [HttpPost("GetJWTBearerToken")]
+        [MapToApiVersion("1.0")]
         [Produces("application/json")]       
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(TokenResponse))]
         [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(NotFoundException))]

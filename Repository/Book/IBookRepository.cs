@@ -8,7 +8,7 @@ namespace Repository.Book
 {
     public interface IBookRepository : IGenericRepository<Entities.Book>
     {
-         Task<List<BookResponseDto>> GetAllBooks (GetBooksRequestDto request);
+         Task<GetAllBooksResponseDto> GetAllBooks (GetBooksRequestDto request);
          Task<BookResponseDto> CreateBook(BookRequestDto request);
          Task<BookResponseDto> UpdatePrice(long id, decimal price);
          Task<BookResponseDto> UpdateBook(BookRequestDto request);

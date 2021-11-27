@@ -39,25 +39,25 @@ namespace BookCartAPI.Controllers
         /// </summary>
         /// <param name="request"></param>
         /// <returns>List<BooksResponse></returns>
-        [HttpPost("GetAllBooks")]        
+        [HttpPost("SearchBooks")]        
         [Produces("application/json")]
         [MapToApiVersion("1.0")]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(List<BooksResponse>))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(GetAllBooksResponse))]
         [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(NotFoundException))]
         [ProducesResponseType(StatusCodes.Status401Unauthorized, Type = typeof(AuthenticationException))]
         [ProducesResponseType(StatusCodes.Status403Forbidden, Type = typeof(AuthorizationException))]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(BadRequestException))]
         [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(InternalServerException))]
-        public async Task<IActionResult> GetAllBooks(GetBooksRequest request)
+        public async Task<IActionResult> SearchBooks(GetBooksRequest request)
         {
             try
             {
                     GetBooksRequestDto reqDto = _mapper.Map<GetBooksRequestDto>(request);
-                    List<BookResponseDto> resultDto = await _bookService.GetAllBooks(reqDto);
+                    GetAllBooksResponseDto resultDto = await _bookService.GetAllBooks(reqDto);
                     if (resultDto != null)
                     {
-                        List<BooksResponse> response = _mapper.Map<List<BooksResponse>>(resultDto);
+                         GetAllBooksResponse response = _mapper.Map<GetAllBooksResponse>(resultDto);
                         _logger.Write(LogEventLevel.Information, LoggerTemplate.Success, "GetAllBooks", StatusCodes.Status200OK);
                         return StatusCode(StatusCodes.Status200OK, response);
                     }
@@ -83,7 +83,7 @@ namespace BookCartAPI.Controllers
         /// </summary>
         /// <param name="id"></param>
         /// <returns>BooksResponse</returns>
-        [HttpGet("GetBook/{id}")]       
+        [HttpGet("GetBookById/{id}")]       
         [Produces("application/json")]
         [MapToApiVersion("1.0")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(BooksResponse))]
@@ -93,7 +93,7 @@ namespace BookCartAPI.Controllers
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(BadRequestException))]
         [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(InternalServerException))]
-        public async Task<IActionResult> GetBook(long id)
+        public async Task<IActionResult> GetBookById(long id)
         {
             try
             {

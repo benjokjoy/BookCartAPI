@@ -14,6 +14,7 @@ namespace BookCartAPI.Helper
             CreateMap<BookResponseDto, BooksResponse>();
             CreateMap<UpdateBookRequest, BookRequestDto>();
             CreateMap<CreateBookRequest, BookRequestDto>();
+            CreateMap<GetAllBooksResponseDto, GetAllBooksResponse>();
           
         }
     }
