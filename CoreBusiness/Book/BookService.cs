@@ -14,7 +14,7 @@ namespace CoreBusiness.Book
 
             this._bookRepo = bookRepo;
         }
-        public async Task<List<BookResponseDto>> GetAllBooks(GetBooksRequestDto request)
+        public async Task<GetAllBooksResponseDto> GetAllBooks(GetBooksRequestDto request)
         {
             try
             {

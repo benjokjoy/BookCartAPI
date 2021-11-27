@@ -8,6 +8,7 @@ namespace BookCartAPI.RequestResponseModels
     {
        
         public string TitleSearch { get; set; }
+        public string AutherSearch { get; set; }
         
         [Required]
         public int PageNum { get; set; }

@@ -42,30 +42,32 @@ namespace BookCartAPI.xTests.Book
         [Fact]
         public void GetAllBooks_Controller_Test()
         {
-            List<BookResponseDto> serviceResponseObj = new List<BookResponseDto>() {
+
+            List<BookResponseDto> booksDetails = new List<BookResponseDto>() {
             new BookResponseDto{ Id = 2, Title = "Arms and the Man",Author = "G.B.Shaw",Description = "Arms and the Man is a comedy by George Bernard Shaw",CoverImage = "ArmsandtheMan.jpeg",Price = (decimal)222.9},
             new BookResponseDto{Id = 1, Title = "Ancient Mariner", Author = "Coleridge",Description = "Rime of the Ancient Mariner tells of the misfortunes of a seaman who shoots an albatross, which spells disaster for his ship and fellow sailors.",CoverImage = "AncientMariner.jpeg",Price=(decimal) 156 }
             };
-
+            GetAllBooksResponseDto serviceResponseObj = new GetAllBooksResponseDto() { BooksResponse = booksDetails, TotalCount = 2 };
             _bookService.Setup(x => x.GetAllBooks(It.IsAny<GetBooksRequestDto>())).ReturnsAsync(serviceResponseObj);
 
             var controllerObj = new BookController(_mapper, _bookService.Object);
-            var result = (ObjectResult)controllerObj.GetAllBooks(getAllBooksRequest).Result;
-            var response = (List<BooksResponse>)result.Value;
+            var result = (ObjectResult)controllerObj.SearchBooks(getAllBooksRequest).Result;
+            var response = (GetAllBooksResponse)result.Value;
             Assert.Equal(StatusCodes.Status200OK, result.StatusCode);
             Assert.NotNull(response);
-            Assert.Equal("Arms and the Man", response.FirstOrDefault().Title);
-            Assert.Equal(2, response.Count);
+            Assert.Equal("Arms and the Man", response.BooksResponse.FirstOrDefault().Title);
+            Assert.Equal(2, response.BooksResponse.Count);
+            Assert.Equal(2, response.TotalCount);
         }
         [Fact]
         public void GetAllBooks_Controller_NoData_Test()
         {
-            List<BookResponseDto> serviceResponseObj = null;
+            GetAllBooksResponseDto serviceResponseObj = null;
 
             _bookService.Setup(x => x.GetAllBooks(It.IsAny<GetBooksRequestDto>())).ReturnsAsync(serviceResponseObj);
 
             var controllerObj = new BookController(_mapper, _bookService.Object);
-            var result = (StatusCodeResult)controllerObj.GetAllBooks(getAllBooksRequest).Result;
+            var result = (StatusCodeResult)controllerObj.SearchBooks(getAllBooksRequest).Result;
             Assert.Equal(StatusCodes.Status204NoContent, result.StatusCode);
 
         }
@@ -75,7 +77,7 @@ namespace BookCartAPI.xTests.Book
             _bookService.Setup(x => x.GetAllBooks(It.IsAny<GetBooksRequestDto>())).Throws(new Exception());
 
             var controllerObj = new BookController(_mapper, _bookService.Object);
-            var result = (ObjectResult)controllerObj.GetAllBooks(getAllBooksRequest).Result;
+            var result = (ObjectResult)controllerObj.SearchBooks(getAllBooksRequest).Result;
             Assert.Equal(StatusCodes.Status500InternalServerError, result.StatusCode);
         }
         #endregion
@@ -95,7 +97,7 @@ namespace BookCartAPI.xTests.Book
             _bookService.Setup(x => x.GetBook(It.IsAny<long>())).ReturnsAsync(serviceResponseObj);
 
             var controllerObj = new BookController(_mapper, _bookService.Object);
-            var result = (ObjectResult)controllerObj.GetBook(2).Result;
+            var result = (ObjectResult)controllerObj.GetBookById(2).Result;
             var response = (BooksResponse)result.Value;
             Assert.Equal(StatusCodes.Status200OK, result.StatusCode);
             Assert.NotNull(response);
@@ -109,7 +111,7 @@ namespace BookCartAPI.xTests.Book
             _bookService.Setup(x => x.GetBook(It.IsAny<long>())).ReturnsAsync(serviceResponseObj);
 
             var controllerObj = new BookController(_mapper, _bookService.Object);
-            var result = (StatusCodeResult)controllerObj.GetBook(1000).Result;
+            var result = (StatusCodeResult)controllerObj.GetBookById(1000).Result;
             Assert.Equal(StatusCodes.Status204NoContent, result.StatusCode);
 
         }
@@ -119,7 +121,7 @@ namespace BookCartAPI.xTests.Book
             _bookService.Setup(x => x.GetBook(It.IsAny<long>())).Throws(new Exception());
 
             var controllerObj = new BookController(_mapper, _bookService.Object);
-            var result = (ObjectResult)controllerObj.GetBook(2).Result;
+            var result = (ObjectResult)controllerObj.GetBookById(2).Result;
             Assert.Equal(StatusCodes.Status500InternalServerError, result.StatusCode);
         }
         #endregion

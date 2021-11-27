@@ -6,7 +6,7 @@ namespace CoreBusiness.Book
 {
     public interface IBookService
     {
-        Task<List<BookResponseDto>> GetAllBooks(GetBooksRequestDto request);
+        Task<GetAllBooksResponseDto> GetAllBooks(GetBooksRequestDto request);
         Task<BookResponseDto> GetBook(long id);
         Task<BookResponseDto> UpdatePrice(long id, decimal price);
         Task<BookResponseDto> UpdateBook(BookRequestDto request);

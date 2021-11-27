@@ -16,7 +16,7 @@ namespace Repository.Book
         {
 
         }
-        public async Task<List<BookResponseDto>> GetAllBooks(GetBooksRequestDto request)
+        public async Task<GetAllBooksResponseDto> GetAllBooks(GetBooksRequestDto request)
         {
             try
             {
@@ -28,24 +28,33 @@ namespace Repository.Book
                     results = results.Where(s =>
                                   s.Title.ToLower().Contains(request.TitleSearch.ToLower()));
                 }
+                if (!string.IsNullOrEmpty(request.AutherSearch))
+                {
+                    results = results.Where(s =>
+                                  s.Author.ToLower().Contains(request.AutherSearch.ToLower()));
+                }
 
-                var resultAfterFilter = await results.Where(i => i.IsDeleted == false).OrderByDescending(x => x.Id)
-                              .Skip((request.PageNum - 1) * request.PageSize).Take(request.PageSize).ToListAsync();
+                results =  results.Where(i => i.IsDeleted == false).OrderByDescending(x => x.Id);
+                int totalRecords = results.Count();
+                var resultAfterFilter =await results.Skip((request.PageNum - 1) * request.PageSize).Take(request.PageSize).ToListAsync();
 
                 if(resultAfterFilter==null)
                 {
                     return null;
                 }
-                return resultAfterFilter.Select(i => new BookResponseDto
+                return new GetAllBooksResponseDto
                 {
-                    Id = i.Id,
-                    Title = i.Title,
-                    Description = i.Description,
-                    Author = i.Author,
-                    CoverImage = i.CoverImage,
-                    Price = i.Price
-                }).ToList();
-
+                    BooksResponse = resultAfterFilter.Select(i => new BookResponseDto
+                    {
+                        Id = i.Id,
+                        Title = i.Title,
+                        Description = i.Description,
+                        Author = i.Author,
+                        CoverImage = i.CoverImage,
+                        Price = i.Price
+                    }).ToList(),
+                    TotalCount = totalRecords
+                };
             }
             catch (Exception ex)
             {
