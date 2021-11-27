@@ -20,4 +20,4 @@ You have to pass the bearer token in the requst header with field "Authorization
 You can use Authorization Type as "Bearer Token" in Postman.
 
 ## Environments ##
-This API has 2 environments (Development & Production). You can select the required environment from launchSettings.json file.
+This API has 2 environments (Development & Production). You can set the required environment from launchSettings.json file.
